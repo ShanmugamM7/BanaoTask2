@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Blog Posts</h2>
+  {% for category in categories %}
+    <h3>{{ category.name }}</h3>
+    <ul>
+      {% for post in blog_posts.filter(category=category) %}
+        <li>
+          <a href="{% url 'blog_detail' post.id %}">{{ post.title }}</a>
+          <p>{{ post.summary|truncatewords:15 }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+  <a href="{% url 'create_blog_post' %}">Create a New Blog Post</a>
+{% endblock %}

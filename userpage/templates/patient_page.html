@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #0077cc; /* Ocean blue color */
+            color: #fff; /* White text color */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #005699; /* Darker blue border */
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #0077cc; /* Ocean blue color for heading */
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color: #005699; /* Darker blue for the button */
+            border-radius: 5px;
+        }
+
+        img {
+            max-width: 100%; /* Make sure the image doesn't exceed its container width */
+            margin-bottom: 10px;
+        }
+        .content-container {
+            display: flex;
+        }
+        .patient-details {
+            flex: 1;
+            padding-right: 20px;
+        }
+        .blog-posts {
+            flex: 1;
+        }
+        .blog-posts li {
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Patient Dashboard</h1>
+        <a href="{% url 'logout' %}">Logout</a>
+    </header>
+    <div class="content-container">
+        <div class="patient-details">
+            <h2>Patient Details</h2>
+            <p>Name: {% if patient_data.first_name or patient_data.last_name %}{{ patient_data.first_name }} {{ patient_data.last_name }}{% else %}N/A{% endif %}</p>
+            {% if patient_data.profile_picture %}
+                <p>Profile Picture: <img src="{{ patient_data.profile_picture.url }}" alt="Profile Picture"></p>
+            {% else %}
+                <p>Profile Picture: N/A</p>
+            {% endif %}
+            <p>Username: {{ patient_data.username }}</p>
+            <p>Email: {{ patient_data.email }}</p>
+            <p>Address Line 1: {{ patient_data.address_line1 }}</p>
+            <p>City: {{ patient_data.city }}</p>
+            <p>State: {{ patient_data.state }}</p>
+            <p>Pincode: {{ patient_data.pincode }}</p>
+            
+        </div>
+        <div class="blog-posts">
+
+            
+            <h2>Recent Blog Posts by Doctors</h2>
+            <ul>
+                {% for post in blog_posts %}
+                    <!-- <li>{{ post.title }}</li> -->
+                    <li><a href="{% url 'blog_post_detail' post.pk %}">{{ post.title }}</a></li>
+
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome!</title>
+        <style>
+            body {
+                background-color: #f4f4f4; /* Light gray background */
+                color: #333; /* Dark text color */
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+            }
+
+            header {
+                background-color: #005699; /* Slightly darker blue color */
+                color: #fff; /* White text color */
+                padding: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 2px solid #004577; /* Darker blue border */
+            }
+
+            h1 {
+                text-align: center;
+                margin: 20px 0;
+            }
+
+            .auth-links {
+                display: flex;
+                align-items: center; /* Center-align authentication links vertically */
+            }
+
+            .auth-links a {
+                margin: 0 10px;
+                padding: 10px 20px;
+                color: #005699; /* Slightly darker blue color */
+                text-decoration: none;
+                border: 2px solid #0077cc; /* Ocean blue border */
+                border-radius: 5px;
+                background-color: #fff; /* White background */
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+            .auth-links a:hover {
+                background-color: #0077cc; /* Ocean blue on hover */
+                color: #fff; /* White text on hover */
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            {% if request.path == '/' %}
+            <h1>Home</h1>
+            {% else %}
+            <h1>{{ request.path }}</h1>
+            {% endif %}
+            <div class="auth-links">
+                {% if request.user.is_authenticated %}
+                <p>{{ request.user.username }}</p>
+                <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Signup</a>
+                {% endif %}
+            </div>
+            <div class="blog-links">
+                <!-- <a href="{% url 'blog_list' %}">Blog</a>
+                <a href="{% url 'create_blog_post' %}">Create Blog Post</a> -->
+            </div>
+        </header>
+    
+        <h1>Welcome!</h1>
+    </body>
+
+    </html>
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #0077cc; /* Ocean blue color */
+            color: #000; /* White text color */
+        }
+
+        header {
+            background-color: #005699; /* Darker blue color */
+            padding: 10px;
+            border-bottom: 2px solid #003d66; /* Even darker blue border */
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .blog-post {
+            background-color: #fff; /* White background for the blog post */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #0077cc; /* Ocean blue color for heading */
+            margin-top: 0;
+        }
+
+        p {
+            font-size: 20px;
+            color: #0077cc;
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #ffff; /* Darker blue for links */
+            text-decoration: none;
+             padding: 8px 16px;
+            background-color: #005699; /* Darker blue for the button */
+            border-radius: 5px;
+        }
+        img {
+            max-width: 30%; /* Ensure the image does not exceed its container */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 5px; /* Optional: Add border-radius to the image */
+            margin-bottom: 10px; /* Optional: Add margin to separate image from text */
+        }
+        button {
+            background-color: #005699; /* Darker blue background for buttons */
+            color: #fff; /* White text color for buttons */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Blog Details </h1>
+    </header>
+
+    <div class="blog-post">
+        <h2>{{ post.title }}</h2>
+        <img src="{{ post.image.url }}" alt="{{ post.title }} Image"> 
+        <p>Category:</p><p1> &nbsp;{{ post.category }}</p1>
+        <p>Content:</p><p1></p1>&nbsp; {{ post.content }}</p1>
+        <p>Summary:</p><p1></p1>&nbsp;{{ post.summary }}</p1>
+        <div style="height: 20px;"></div>
+        <div style="height: 20px;"></div>
+        {% if is_doctor %}
+            <a href="{% url 'doctor_page' %}">Back to Doctor List</a>
+        {% else %}
+            <a href="{% url 'patient_page' %}">Back to Patient List</a>
+        {% endif %}
+        
+    </div>
+</body>
+</html>

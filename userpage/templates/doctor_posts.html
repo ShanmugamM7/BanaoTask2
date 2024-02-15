@@ -1,0 +1,15 @@
+<!-- doctor_posts.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Your Blog Posts</h2>
+  <ul>
+    {% for post in doctor_posts %}
+      <li>
+        <strong>{{ post.title }}</strong>
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        <p>{{ post.summary|truncatewords:15 }}{% if post.summary|wordcount > 15 %}...{% endif %}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

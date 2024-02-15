@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #0077cc; /* Ocean blue color */
+            color: #fff; /* White text color */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #005699; /* Darker blue border */
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #0077cc; /* Ocean blue color for heading */
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color: #005699; /* Darker blue for the button */
+            border-radius: 5px;
+        }
+
+        img {
+            max-width: 100%; /* Make sure the image doesn't exceed its container width */
+        }
+
+        .content-container {
+            display: flex;
+        }
+
+        .doctor-details {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .blog-posts {
+            flex: 1;
+        }
+        .blog-posts li {
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Doctor Dashboard</h1>
+        <a href="{% url 'logout' %}">Logout</a>
+    </header>
+    <div class="content-container">
+        <div class="doctor-details">
+            <h2>Doctor Details</h2>
+            <!-- Your existing doctor details display... -->
+            <p>Name: {% if doctor_data.first_name or doctor_data.last_name %}{{ doctor_data.first_name }} {{ doctor_data.last_name }}{% else %}N/A{% endif %}</p>
+            <p>Username: {{ doctor_data.username }}</p>
+            <p>Email: {{ doctor_data.email }}</p>
+            {% if doctor_data.profile_picture %}
+                <p>Profile Picture: <img src="{{ doctor_data.profile_picture.url }}" alt="Profile Picture"></p>
+            {% else %}
+                <p>Profile Picture: N/A</p>
+            {% endif %}
+            <p>Address Line 1: {{ doctor_data.address_line1|default:"N/A" }}</p>
+            <p>City: {{ doctor_data.city|default:"N/A" }}</p>
+            <p>State: {{ doctor_data.state|default:"N/A" }}</p>
+            <p>Pincode: {{ doctor_data.pincode|default:"N/A" }}</p>
+            <!-- <h2>Your Blog Posts</h2> -->
+            
+        </div>
+
+        <div class="blog-posts">
+
+            <!-- Add a link to create a new blog post -->
+            <a href="{% url 'create_blog_post' %}">Create a New Blog Post</a>
+            <h2>Recent Blog Posts by Doctors</h2>
+            <ul>
+                {% for post in blog_posts %}
+                    <!-- <li>{{ post.title }}</li> -->
+                    <li><a href="{% url 'blog_post_detail' post.pk %}">{{ post.title }}</a></li>
+
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

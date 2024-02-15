@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        body {
+            background-color: #0077cc; /* Ocean blue color */
+            color: #fff; /* White text color */
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh; /* Adjusted minimum height */
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2em; /* Adjust the font size as needed */
+            margin-bottom: 20px; /* Spacing between heading and form */
+        }
+
+        form {
+            width: 600px; /* Adjust the form width as needed */
+            text-align: center; /* Center align form elements */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-color: #87CEEB; /* Light blue background */
+            padding: 20px; /* Added fixed padding */
+            border-radius: 10px; /* Added border-radius for rounded corners */
+        }
+
+        .left-col,
+        .right-col {
+            width: 48%; /* Adjust the column width as needed */
+            margin-bottom: 15px;
+        }
+
+        label {
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select,
+        input,
+        button {
+            margin-bottom: 10px; /* Reduced vertical margin */
+            padding: 8px; /* Fixed padding for form elements */
+            font-size: 1.2em; /* Adjust the font size of form elements */
+            width: calc(50% - 12px); /* Make form elements take 50% width with reduced padding */
+            box-sizing: border-box; /* Include padding and border in width calculation */
+            border-radius: 8px; /* Add border-radius for smooth corners */
+        }
+
+        select {
+            width: 100%; /* Set the width of the select element to 100% */
+        }
+
+        .left-col label,
+        .right-col label {
+            width: 100%;
+        }
+
+        .left-col select,
+        .left-col input,
+        .right-col select,
+        .right-col input {
+            width: calc(100% - 12px);
+        }
+
+        button {
+            background-color: #005699; /* Darker blue for the button */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin-top: 15px;
+            font-size: 1.2em; /* Adjust the font size of the link */
+        }
+
+        /* Added space at the end of the page */
+        .bottom-space {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Signup</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for error in form.non_field_errors %}
+            <small style="color: red">{{ error }}</small>
+        {% endfor %}
+        {% for field in form %}
+            <div class="{% if forloop.counter|divisibleby:2 %}right-col{% else %}left-col{% endif %}">
+                {% if field.name == 'user_type' %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <select name="{{ field.name }}" id="{{ field.id_for_label }}">
+                        <option value="" disabled selected>Select</option>
+                        <option value="D" {% if field.value == 'D' %}selected{% endif %}>Doctor</option>
+                        <option value="P" {% if field.value == 'P' %}selected{% endif %}>Patient</option>
+                    </select>
+                {% else %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                    {{ field }}
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <small style="color: red">{{ error }}</small>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" style="background-color: #005699; color: #fff;">Register</button>
+        <a href="{% url 'login' %}">Already have an account? Login</a>
+
+        <!-- Added space at the end of the page -->
+        <div class="bottom-space"></div>
+    </form>
+</body>
+</html>
+
